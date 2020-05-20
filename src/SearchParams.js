@@ -1,13 +1,22 @@
-import React, { useState } from "react";
-import { ANIMALS } from "@frontendmasters/pet";
+import React, { useState, useEffect } from "react";
+import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./useDropdown";
 
 const SearchParams = () => {
   const [location, updateLocation] = useState("Seattle, WA");
   const [breeds, updateBreeds] = useState([]);
 
-  const [animal, AnimalDropdown] = useDropdown("Animal", "", ANIMALS);
-  const [breed, BreedDropdown] = useDropdown("Breed", "", breeds);
+  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
+  const [breed, BreedDropdown, updateBreed] = useDropdown("Breed", "", breeds);
+
+  useEffect(() => {
+    updateBreed("");
+    updateBreeds([]);
+    pet.breeds(animal).then(({ breeds }) => {
+      const breedsList = breeds.map(({ name }) => name);
+      updateBreeds(breedsList);
+    }, console.error);
+  }, [animal]);
 
   return (
     <div className="search-params">
