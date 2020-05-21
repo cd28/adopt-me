@@ -32,8 +32,8 @@ const SearchParams = () => {
   return (
     <div className="search-params">
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
+        onSubmit={(event) => {
+          event.preventDefault();
           requestPets();
         }}
       >
@@ -43,7 +43,7 @@ const SearchParams = () => {
             id="location"
             value={location}
             placeholder="Location"
-            onChange={(e) => updateLocation(e.target.value)}
+            onChange={(event) => updateLocation(event.target.value)}
           />
         </label>
 
